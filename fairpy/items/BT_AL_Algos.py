@@ -9,8 +9,6 @@ def AL (playerA, playerB):
     """
     >>> AL(0,0)
     1
-    >>> AL(1,1)
-    0
     """
     return 0
 
