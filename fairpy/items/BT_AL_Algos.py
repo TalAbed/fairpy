@@ -10,7 +10,7 @@ def AL (playerA, playerB):
     >>> AL(0,0)
     1
     """
-    return 0
+    return 7
 
 if __name__ == "__main__":
     import doctest
