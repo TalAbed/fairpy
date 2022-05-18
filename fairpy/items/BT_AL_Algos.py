@@ -18,7 +18,22 @@ def BT (playerA: list, playerB: list):
     >>> BT([1,2,3,4], [1,2,3,4])
     [], [], [1,2,3,4]
     """
-    return [],[],[]
+    A = []
+    B = []
+    CP = []
+    while len(playerA)>0:
+        if playerA[0] != playerB[0]:
+            A.append(playerA[0])
+            B.append(playerB[0])
+            playerA.remove(playerB[0])
+            playerB.remove(playerA[0])
+            del playerA[0]
+            del playerB[0]
+        else:
+            CP.append(playerA[0])
+            del playerA[0]
+            del playerB[0]
+    return A, B, CP
 
 def AL (playerA: list, playerB: list):
     """
@@ -31,7 +46,96 @@ def AL (playerA: list, playerB: list):
     >>> AL([1,2,3,4], [1,2,3,4])
     [], [], [1,2,3,4]
     """
-    return [],[],[]
+    A = []
+    B = []
+    CP = []
+    originA = playerA.copy()
+    originB = playerB.copy()
+    # make the first allocation
+    first = False
+    while not first:
+        #print("in")
+        if playerA[0]==playerB[0]:
+            CP.append(playerA[0])
+            del playerA[0]
+            del playerB[0]
+        else:
+            A.append(playerA[0])
+            B.append(playerB[0])
+            playerA.remove(playerB[0])
+            playerB.remove(playerA[0])
+            del playerA[0]
+            del playerB[0]
+            first = True
+    #make rest of the allocations
+    t=1
+    given = False
+    #print(originA, originB)
+    #print(playerA, playerB)
+    while len(playerA)>0:
+        print("return",A,B,CP)
+        print("kelet", playerA, playerB)
+        if playerA[0] != playerB[0]:
+            #print("in first if")
+            A.append(playerA[0])
+            B.append(playerB[0])
+            playerA.remove(playerB[0])
+            playerB.remove(playerA[0])
+            del playerA[0]
+            del playerB[0]
+            #print("bad", playerA, playerB)
+        else:
+            tied_item = playerA[0]
+            #print("ti",tied_item)
+            del playerA[0]
+            del playerB[0]
+            for item in playerA:
+                if not given:
+                    B.append(tied_item)
+                    A.append(item)
+                    index = originA.index(item)
+                    counter=0
+                    for b in B:
+                        if originA.index(b)<index:
+                            counter+=1
+                    if counter<=t:
+                        given = True
+                        playerB.remove(item)
+                        playerA.remove(item)
+                    else:
+                        B.remove(tied_item)
+                        A.remove(item)
+                        t+=1
+            #print("shit", playerA, playerB)
+            t=1
+            for item in playerB:
+                if not given:
+                    A.append(tied_item)
+                    B.append(item)
+                    index = originB.index(item)
+                    counter=0
+                    for a in A:
+                        if originB.index(a)<index:
+                            counter+=1
+                    if counter<=t:
+                        given = True
+                        #print("lalala",playerA[0], playerB[0])
+                        #print("wello", playerA, playerB)
+                        playerA.remove(item)
+                        playerB.remove(item)
+                    else:
+                        A.remove(tied_item)
+                        B.remove(item)
+                        t+=1
+            if given == False:
+                CP.append(playerA[0])
+                playerA.remove(playerB[0])
+                playerB.remove(playerA[0])
+                del playerA[0]
+                del playerB[0]
+            t+=1
+            #print(A,B,CP)
+    return A,B,CP
 
 if __name__ == "__main__":
     import doctest
