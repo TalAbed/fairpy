@@ -8,6 +8,12 @@
 # אין תלות בערך של כל חפץ
 
 def remove(playerA: list, playerB: list):
+    """
+    >>> remove([1,2,3,4],[3,4,2,1])
+    ([2, 4], [4, 2])
+    >>> remove([5,6,1,2,4,3],[1,2,3,4,5,6])
+    ([6, 2, 4, 3], [2, 3, 4, 6])
+    """
     playerA.remove(playerB[0])
     playerB.remove(playerA[0])
     del playerA[0]
