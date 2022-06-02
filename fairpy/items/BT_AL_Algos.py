@@ -7,16 +7,23 @@
 # המאמר מציג 2 אלגוריתמים לחלוקה הוגנת נטולת קנאה המבוססת אך ורק על האופן שבו השחקנים מדרגים את החפצים
 # אין תלות בערך של כל חפץ
 
+def remove(playerA: list, playerB: list):
+    playerA.remove(playerB[0])
+    playerB.remove(playerA[0])
+    del playerA[0]
+    del playerB[0]
+    return playerA, playerB
+
 def BT (playerA: list, playerB: list):
     """
     >>> BT([1,2,3,4],[2,3,4,1])
-    [1], [2], [3,4]
+    ([1], [2], [3, 4])
 
     >>> BT([1,2,3,4,5,6], [2,3,5,4,1,6])
-    [1,4], [2,5], [3,6]
+    ([1, 4], [2, 5], [3, 6])
 
     >>> BT([1,2,3,4], [1,2,3,4])
-    [], [], [1,2,3,4]
+    ([], [], [1, 2, 3, 4])
     """
     A = []
     B = []
@@ -25,10 +32,7 @@ def BT (playerA: list, playerB: list):
         if playerA[0] != playerB[0]:
             A.append(playerA[0])
             B.append(playerB[0])
-            playerA.remove(playerB[0])
-            playerB.remove(playerA[0])
-            del playerA[0]
-            del playerB[0]
+            remove(playerA, playerB)
         else:
             CP.append(playerA[0])
             del playerA[0]
@@ -38,13 +42,13 @@ def BT (playerA: list, playerB: list):
 def AL (playerA: list, playerB: list):
     """
     >>> AL([1,2,3,4],[2,3,4,1])
-    [1,3], [2,4], []
+    ([1, 3], [2, 4], [])
 
     >>> AL([1,2,3,4,5,6], [2,3,5,4,1,6])
-    [1,3], [2,5], [4,6]
+    ([1, 3], [2, 5], [4, 6])
 
     >>> AL([1,2,3,4], [1,2,3,4])
-    [], [], [1,2,3,4]
+    ([], [], [1, 2, 3, 4])
     """
     A = []
     B = []
@@ -62,10 +66,7 @@ def AL (playerA: list, playerB: list):
         else:
             A.append(playerA[0])
             B.append(playerB[0])
-            playerA.remove(playerB[0])
-            playerB.remove(playerA[0])
-            del playerA[0]
-            del playerB[0]
+            remove(playerA, playerB)
             first = True
     #make rest of the allocations
     t=1
@@ -79,10 +80,7 @@ def AL (playerA: list, playerB: list):
             #print("in first if")
             A.append(playerA[0])
             B.append(playerB[0])
-            playerA.remove(playerB[0])
-            playerB.remove(playerA[0])
-            del playerA[0]
-            del playerB[0]
+            remove(playerA, playerB)
             #print("bad", playerA, playerB)
         else:
             tied_item = playerA[0]
@@ -129,10 +127,7 @@ def AL (playerA: list, playerB: list):
                         t+=1
             if given == False:
                 CP.append(playerA[0])
-                playerA.remove(playerB[0])
-                playerB.remove(playerA[0])
-                del playerA[0]
-                del playerB[0]
+                remove(playerA, playerB)
             t+=1
             #print(A,B,CP)
     return A,B,CP
